@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <span id="mode">
+        <button id="modeChange" onclick="toggleMode()">Dark</button>
+    </span>
+    <div class="cal-box">
+        <h1 id="heading">Calculator</h1>
+        <div class="cal-top">
+            <input type="text" id="textbox" placeholder="=2+2">
+        </div>
+        <div class="cal-bottom">
+
+            <button class="btn w" onclick="cutAll()">CE</button>
+            <button class="btn" onclick="cut()">X</button>
+            <button class="btn" onclick="addsym(this)"> </button>
+            <button class="btn" onclick="addsym(this)">/</button>
+            
+            <button class="btn" onclick="add(this)">7</button>
+            <button class="btn" onclick="add(this)">8</button>
+            <button class="btn" onclick="add(this)">9</button>
+            <button class="btn" onclick="addsym(this)">*</button>
+            
+            <button class="btn" onclick="add(this)">4</button>
+            <button class="btn" onclick="add(this)">5</button>
+            <button class="btn" onclick="add(this)">6</button>
+            <button class="btn" onclick="addsym(this)">-</button>
+            
+            <button class="btn" onclick="add(this)">1</button>
+            <button class="btn" onclick="add(this)">2</button>
+            <button class="btn" onclick="add(this)">3</button>
+            <button class="btn" onclick="addsym(this)">+</button>
+            
+            <button class="btn" onclick="add(this)">00</button>
+            <button class="btn" onclick="add(this)">0</button>
+            <button class="btn" onclick="addsym(this)">.</button>
+            <button class="btn" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <footer class="footer">
+        Copyright © 2025 by Sonali | 
+        All Rights Reserved.
+    </footer>
+</body>
+</html>
+<script>
+    window.onload = function(){
+        let savedTheme = localStorage.getItem("mode");
+        if(savedTheme == "Dark"){
+            toggleMode();
+        }
+        
+    }
+    function toggleMode(){
+        let body = document.getElementsByTagName("body")[0];
+        let btn = document.getElementById("modeChange");
+        let box = document.getElementsByClassName("cal-box")[0];
+        if (btn.innerText == "Dark")
+        {
+            btn.innerText = "Light";
+            box.style.backgroundColor = "rgba(16, 16, 16, 0.459)";
+            body.style.backgroundColor = "black";
+            document.getElementById("heading").style.color = "white";
+            localStorage.setItem("mode","Dark");
+        }
+        else{
+            btn.innerText = "Dark";
+            box.style.backgroundColor = "rgba(245, 238, 169, 0.943)";
+            body.style.backgroundColor = "White";
+            document.getElementById("heading").style.color = "black";
+            localStorage.setItem("mode","Light");
+        }
+    }
+    function calculate(){
+        let inputValue = document.getElementById("textbox");
+        let result=eval(inputValue.value);
+        inputValue.value = result;
+        
+    }
+    function add(element){
+        let inputText = document.getElementById("textbox");
+        inputText.value+=element.textContent;
+    }
+
+    function addsym(element){
+        let inputText = document.getElementById("textbox");
+        let last = inputText.value[inputText.value.length-1];
+        let seclast = inputText.value[inputText.value.length-2];
+         console.log(last,seclast);
+
+        let symbol = element.textContent;
+       
+        let sym = ["+","-","x","/","%"];
+        if((inputText.value == ""))
+            {return;}
+
+        if(!(sym.includes(last))){
+            inputText.value+=symbol;
+        }
+        
+    }
+
+    function cut(){
+        let inputText = document.getElementById("textbox");
+        inputText.value = inputText.value.slice(0,-1);
+    }
+    function cutAll(){
+        let inputText = document.getElementById("textbox");
+        inputText.value = "";
+    }
+
+</script>
